@@ -210,7 +210,13 @@ def main():
                     if int(func['label']) == 1:
                         func['reason'] = "This function first " + func['source'] + " and then " + func['sink'] + ", which may cause a " + cwe2desc[func['cwe_id']] + "."
                     else:
-                        func['reason'] = "This function first " + func['source'] + " and then " + func['sink'] + "."
+                        func['reason'] = "This function first " + func['source'] + " and then " + func['sink'] + ", which is a secure function."
+                    if func['source'] == "" and func['sink'] == "":
+                        if int(func['label']) == 1:
+                            func['reason'] = "This function may cause a " + cwe2desc[data['cwe_id']] + "."
+                        else:
+                            func['reason'] = "This function is a secure function."
+                    
                 for func in func_list:
                     json_func = json.dumps(func)
                     jsonl_file.write(json_func)
